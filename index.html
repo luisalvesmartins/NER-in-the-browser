@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="bundle.js"></script>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size:10px;
+        }
+        A {
+            margin-right:5px;
+            cursor:pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    Pedido<br>
+    <input type="text" id="inputBox" onkeyup="if(event.key==='Enter')doit()" style="width:400px" value="quero um café">
+    <button onclick="doit()">Ask</button><br>
+    <a onclick="show(this)">Quero três cafés</a>    
+    <a onclick="show(this)">Quero meia dúzia de bolos</a>    
+    <a onclick="show(this)">O meu email é aaa@aaa.pt</a>    
+    <a onclick="show(this)">Qual o nome do Spiderman</a>    
+    <br><br>
+    <div style="display:flex">
+        <div>
+            Intents<br>
+            <pre id="result" style="font-size:8px"></pre>
+        </div>
+        <div style="margin-left:10px">
+            Entities<br>
+            <pre id="entities" style="font-size:8px"></pre>
+        </div>
+    </div>
+ <script>
+    function show(a){
+        inputBox.value=a.innerText;
+        doit();
+        return false;
+    }
+  const { containerBootstrap, Nlp, LangEn, LangPt, fs,BuiltinMicrosoft } = window.nlpjs;
+
+  let nlp;
+  (async () => {
+    const container = await containerBootstrap({languages:['pt'], forceNER:true } );
+    container.register('fs', fs);
+    container.use(Nlp);
+    container.use(LangPt);
+    container.use('Basic');
+    nlp = container.get('nlp');
+    nlp.settings.autoSave = false;
+    await nlp.addCorpus('http://127.0.0.1:5500/corpus-pt.json');
+    await nlp.train();
+})();
+
+  async function doit(){
+        const response = await nlp.process('pt', inputBox.value);
+        result.innerHTML=JSON.stringify(response.classifications, null, 2);
+        entities.innerHTML=JSON.stringify(response.entities, null, 2);
+
+  }
+  </script>
+</body>
+</html>

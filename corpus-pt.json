@@ -1,0 +1,72 @@
+{
+  "name": "Corpus com entidades",
+  "locale": "pt-PT",
+  "data": [
+    {
+      "intent": "comida.quero",
+      "utterances": [
+        "quero @comida",
+        "quero um @comida",
+        "gostaria de ter @quantidade @comida",
+        "apetece-me @quantidade @comida",
+        "@quantidade @comida por favor",
+        "por favor dê-me @quantidade @comida"
+      ]
+    },
+    {
+      "intent": "hero.realname",
+      "utterances": [
+        "qual é o nome real de @hero no dia @Date"
+      ]
+    },
+    {
+      "intent": "email",
+      "utterances": [
+        "o meu email é @ownEmail",
+        "meu email @ownEmail"
+      ]
+    },
+    {
+      "intent": "hero.city",
+      "utterances": [
+        "onde vive o @hero ?"
+      ]
+
+    }
+  ],
+ "entities": {
+    "hero": {
+      "options": {
+        "spiderman": ["spiderman", "spider-man"],
+        "ironman": ["ironman", "iron-man"],
+        "thor": ["thor"]
+      }
+    },
+    "email": {
+      "local":["en", "pt"],
+      "regex":"/\\b(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3})\\b/gi"
+    },
+    "comida": {
+      "options": {
+        "bolacha": ["bolacha", "cookie","bolachas"],
+        "bolo": ["bolo","bolos"],
+        "tarte": ["tarte","tartes"],
+        "café": ["café","bica","cafés","bicas","cafézinho"]
+      }
+    },
+    "quantidade": {
+      "options": {
+        "um": ["um","uma"],
+        "dois": ["dois","um par de","duas"],
+        "três": ["três","um trio de"],
+        "quatro": ["quatro"],
+        "cinco": ["cinco"],
+        "seis": ["seis","me dúzia de"],
+        "sete": ["sete"],
+        "oito": ["oito"],
+        "nove": ["nove"],
+        "dez": ["dez","uma dezena de"]
+      }
+    }
+  }
+}
